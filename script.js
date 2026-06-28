@@ -1,4 +1,4 @@
-function isValid (move){
+function isValid(move){
     if (move === null){
         return false;
     }
@@ -56,13 +56,14 @@ function game() {
     for (let round = 1; round <= 5; round++) {
         let playerSelection = prompt("Round " + round + ": Choose your move (Rock, Paper, or Scissors):");
         
-        while (playerSelection === null || !isValid (playerSelection)){
+        while (playerSelection === null || !isValid(playerSelection)){
             if (playerSelection === null){
                 playerSelection = prompt("You can't quit now, creator! choose: Rock, Paper, Scissors:");
             } else {
                 playerSelection = prompt("'" + playerSelection + "' is not a move! Choose: Rock, Paper, or Scissors:");
             }
         }
+        playerSelection = playerSelection.toLowerCase().trim();
         const computerSelection = computerPlay();
         const result = playRound(playerSelection, computerSelection);
 
@@ -80,7 +81,7 @@ function game() {
         } else {
             console.log("[AI]: A mirror match? Curious...very curious...");
         }
-        console.log("Score -> You:" + playerScore + " | AI: " + computerScore);
+        console.log("Score -> You: " + playerScore + " | AI: " + computerScore);
         console.log("...");
     }
 
