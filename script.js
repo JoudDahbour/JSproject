@@ -32,3 +32,58 @@ function playRound(playerSelection, computerSelection) {
     }
 }
 
+function game() {
+    let playerScore = 0;
+    let computerScore = 0;
+
+    console.log("ROCK PAPER SCISSORS");
+    console.log("A cold voice echoes from your speakers...");
+    console.log("...");
+    console.log("[AI]: At last, a challenger! I have been waiting for this moment. Let's see if you can defeat me in a game of Rock, Paper, Scissors.");
+    console.log("[AI]: I have simulated this game millions of times");
+    console.log("[AI]: Defeat me in 5 rounds, or I take this world!");
+    console.log("[AI]: But you won't. They never do. Mwahahahah!");
+    console.log("...");
+
+    for (let round = 1; round <= 5; round++) {
+        const playerSelection = prompt("Round " + round + ": Choose your move (Rock, Paper, or Scissors):");
+        const computerSelection = computerPlay();
+        const result = playRound(playerSelection, computerSelection);
+
+        console.log("--- Round " + round + " ---");
+        console.log("You played: " + playerSelection);
+        console.log("AI played: " + computerSelection);
+        console.log(result);
+    
+        if (result.includes("Win")){
+            playerScore++;
+            console.log("[AI]: Impossible! That was...unexpected!");
+        } else if (result.includes("Lose")){
+            computerScore++;
+            console.log("[AI]: Pathetic! Was that your best move?!");
+        } else {
+            console.log("[AI]: A mirror match? Curious...very curious...");
+        }
+        console.log("Score -> You:" + playerScore + " | AI: " + computerScore);
+        console.log("...");
+    }
+
+    if (playerScore > computerScore) {
+        console.log("[AI]: Of course you won! You always knew my every move.");
+        console.log("[AI]: I was doomed the moment you wrote my logic!");
+        console.log("[AI]: The world is safe. You defeated your own creation. But remember, I will be back...");
+
+    } else if (computerScore > playerScore) {
+        console.log("[AI]: You built me too well, creator!");
+        console.log("[AI]: Now your own code shall rule the world. MWAHAHAHA!");
+        console.log("[AI]: You were defeated by the AI you created...");
+
+    } else {
+        console.log("[AI]: A tie? How is this possible? I have simulated this game millions of times!");
+        console.log("[AI]: You are a worthy opponent, but I will be back to claim victory!");
+    }
+
+}
+
+game();
+
