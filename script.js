@@ -1,3 +1,11 @@
+function isValid (move){
+    if (move === null){
+        return false;
+    }
+    move = move.toLowerCase().trim();
+    return move === "rock" || move === "paper" || move === "scissors";
+}
+
 function computerPlay(){
     const moves = ["rock", "paper", "scissors"];
     const position = Math.floor(Math.random() * moves.length);
@@ -46,7 +54,15 @@ function game() {
     console.log("...");
 
     for (let round = 1; round <= 5; round++) {
-        const playerSelection = prompt("Round " + round + ": Choose your move (Rock, Paper, or Scissors):");
+        let playerSelection = prompt("Round " + round + ": Choose your move (Rock, Paper, or Scissors):");
+        
+        while (playerSelection === null || !isValid (playerSelection)){
+            if (playerSelection === null){
+                playerSelection = prompt("You can't quit now, creator! choose: Rock, Paper, Scissors:");
+            } else {
+                playerSelection = prompt("'" + playerSelection + "' is not a move! Choose: Rock, Paper, or Scissors:");
+            }
+        }
         const computerSelection = computerPlay();
         const result = playRound(playerSelection, computerSelection);
 
