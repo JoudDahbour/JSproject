@@ -1,0 +1,113 @@
+// ============================================================
+//  DEFEAT THE EVIL AI — A Number Guessing Game
+// ============================================================
+
+const MAX_ATTEMPTS = 10;
+
+// --- 1. Generate a random integer between 1 and 100 ---
+function generateRandomNumber() {
+  return Math.floor(Math.random() * 100) + 1;
+}
+
+// --- 2. Prompt the player for a valid guess ---
+function getPlayerGuess() {
+  let guess;
+
+  while (true) {
+    const input = prompt("Enter your guess (1 – 100):");
+
+    // Player cancelled the prompt
+    if (input === null) {
+      console.log("You fled the battlefield... The Evil AI wins by default. 😈");
+      return null;
+    }
+
+    guess = parseInt(input, 10);
+
+    if (!isNaN(guess) && guess >= 1 && guess <= 100) {
+      return guess;
+    }
+
+    console.log("⚠️  Invalid input! You must enter a whole number between 1 and 100. Try again.");
+  }
+}
+
+// --- 3. Compare the player's guess to the correct number ---
+function checkGuess(playerGuess, correctNumber) {
+  if (playerGuess < correctNumber) {
+    return "too low";
+  } else if (playerGuess > correctNumber) {
+    return "too high";
+  } else {
+    return "correct";
+  }
+}
+
+// --- 4. Calculate a score based on remaining attempts ---
+function calculateScore(attemptsUsed) {
+  const baseScore = 1000;
+  const penalty = (attemptsUsed - 1) * 80;
+  return Math.max(baseScore - penalty, 100); // minimum score of 100
+}
+
+// --- 5. Main game function ---
+function game() {
+  console.log("==========================================================");
+  console.log(" 🤖  GREETINGS, HUMAN.  I AM THE EVIL AI.");
+  console.log(" I have hidden a number somewhere between 1 and 100.");
+  console.log(" You have 10 attempts to find it.");
+  console.log(" Fail, and I shall take over the world. Mwahahaha! 😈");
+  console.log("==========================================================\n");
+
+  const secretNumber = generateRandomNumber();
+  let attempts = 0;
+  let playerHasWon = false;
+
+  while (attempts < MAX_ATTEMPTS) {
+    const remainingAttempts = MAX_ATTEMPTS - attempts;
+    console.log(`🎯  Attempts remaining: ${remainingAttempts}`);
+
+    const playerGuess = getPlayerGuess();
+
+    // Player cancelled — exit early
+    if (playerGuess === null) return;
+
+    attempts++;
+
+    const result = checkGuess(playerGuess, secretNumber);
+
+    if (result === "correct") {
+      playerHasWon = true;
+      break;
+    } else if (result === "too low") {
+      console.log(`📉  Too low! My number is HIGHER than ${playerGuess}. Keep trying...\n`);
+    } else {
+      console.log(`📈  Too high! My number is LOWER than ${playerGuess}. Keep trying...\n`);
+    }
+  }
+
+  // --- End of game output ---
+  console.log("\n==========================================================");
+
+  if (playerHasWon) {
+    const score = calculateScore(attempts);
+    console.log(`✅  IMPOSSIBLE! You guessed it — my number was ${secretNumber}.`);
+    console.log(`🏆  You defeated the Evil AI in ${attempts} attempt${attempts === 1 ? "" : "s"}!`);
+    console.log(`⭐  SCORE: ${score} points`);
+    if (attempts <= 3) {
+      console.log("🔥  LEGENDARY! Are you even human?!");
+    } else if (attempts <= 6) {
+      console.log("👏  Impressive work, worthy opponent.");
+    } else {
+      console.log("😅  You scraped through, but a win is a win!");
+    }
+  } else {
+    console.log(`💀  GAME OVER! You ran out of attempts.`);
+    console.log(`🤖  My number was ${secretNumber}. The Evil AI reigns supreme! Mwahahaha!`);
+  }
+
+  console.log("==========================================================");
+}
+
+// --- Start the game ---
+game();
